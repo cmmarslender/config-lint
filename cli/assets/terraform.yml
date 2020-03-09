@@ -1212,6 +1212,64 @@ rules:
     tags:
       - elasticache
 
+  - id: ELASTICSEARCH_VPC
+    message: Elasticsearch domain must be in a VPC
+    resource: aws_elasticsearch_domain
+    severity: FAILURE
+    assertions:
+      - key: vpc_options
+        op: present
+    tags:
+      - elasticsearch
+  
+  - id: ELASTICSEARCH_ENCRYPTION_AT_REST
+    message: Elasticsearch domain must have encryption at rest
+    resource: aws_elasticsearch_domain
+    severity: FAILURE
+    assertions:
+      - key: node_to_node_encryption.enabled
+        op: is-true
+    tags:
+      - elasticsearch
+
+  - id: ELASTICSEARCH_DOMAIN_POLICY_VERSION
+    message: Elasticsearch domain policy must use version 2012-10-17
+    resource: aws_elasticsearch_domain_policy
+    severity: FAILURE
+    assertions:
+      - key: access_policies.Version
+        op: eq
+        value: "2012-10-17"
+    tags:
+      - elasticsearch
+      - policy
+
+  - id: ELASTICSEARCH_POLICY_WILDCARD_PRINCIPAL
+    message: Elasticsearch allow policy should not use a wildcard princpal
+    resource: aws_elasticsearch_domain_policy
+    severity: FAILURE
+    assertions:
+      - none:
+          key: access_policies.Statement[]
+          expressions:
+            - key: Effect
+              op: eq
+              value: Allow
+            - key: Principal
+              op: contains
+              value: "*"
+    tags:
+      - elasticsearch
+      - policy
+
+#  - id: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION
+#    message: Elasticsearch domain must use node to node encryption
+#    resource: aws_elasticsearch_domain
+#    severity: FAILURE
+#    assertions:
+#    tags:
+#      - elasticsearch
+
   - id: NEPTUNE_DB_ENCRYPTION
     message: Neptune database cluster storage should have encryption enabled
     resource: aws_neptune_cluster

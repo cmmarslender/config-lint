@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "test_bucket" {
 
 # Pass
 resource "aws_s3_bucket_policy" "policy_statement_allow_principal_without_wildcard" {
-  bucket = aws_s3_bucket.test_bucket.id
+  bucket = "${aws_s3_bucket.test_bucket.id}"
 
   policy = <<EOF
 {
@@ -27,7 +27,7 @@ EOF
 
 # Pass
 resource "aws_s3_bucket_policy" "policy_statement_deny_principal_without_wildcard" {
-  bucket = aws_s3_bucket.test_bucket.id
+  bucket = "${aws_s3_bucket.test_bucket.id}"
 
   policy = <<EOF
 {
@@ -50,7 +50,7 @@ EOF
 
 # Pass
 resource "aws_s3_bucket_policy" "policy_statement_deny_principal_with_wildcard" {
-  bucket = aws_s3_bucket.test_bucket.id
+  bucket = "${aws_s3_bucket.test_bucket.id}"
 
   policy = <<EOF
 {
@@ -73,7 +73,7 @@ EOF
 
 # Fail
 resource "aws_s3_bucket_policy" "policy_statement_allow_principal_with_wildcard" {
-  bucket = aws_s3_bucket.test_bucket.id
+  bucket = "${aws_s3_bucket.test_bucket.id}"
 
   policy = <<EOF
 {
