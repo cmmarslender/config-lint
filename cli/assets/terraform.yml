@@ -1222,7 +1222,7 @@ rules:
     tags:
       - elasticsearch
   
-  - id: ELASTICSEARCH_ENCRYPTION_AT_REST
+  - id: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION
     message: Elasticsearch domain must have encryption at rest
     resource: aws_elasticsearch_domain
     severity: FAILURE
@@ -1261,14 +1261,6 @@ rules:
     tags:
       - elasticsearch
       - policy
-
-#  - id: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION
-#    message: Elasticsearch domain must use node to node encryption
-#    resource: aws_elasticsearch_domain
-#    severity: FAILURE
-#    assertions:
-#    tags:
-#      - elasticsearch
 
   - id: NEPTUNE_DB_ENCRYPTION
     message: Neptune database cluster storage should have encryption enabled
